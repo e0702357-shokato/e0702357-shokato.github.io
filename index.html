@@ -2,16 +2,92 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <!-- スマホ・タブレットで綺麗に表示するための設定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SYK Portal</title>
-    
-    <!-- ここにアイコンを設定する（外側のHTMLなのでSafariが100%認識する） -->
-    <link rel="apple-touch-icon" href="icon.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <!-- 開いた瞬間、一瞬でGASのポータルURLへ転送（リダイレクト）する -->
-    <meta http-equiv="refresh" content="0; url=https://script.google.com/a/macros/ngoap.ana-g.com/s/AKfycbwbllubqjxgt5Any8DQnQa9yp7Iv85KnCQb0P-7_-fOOxQrnSQVKf4R5t_MaoA6qGv3aA/exec">
+    <!-- ==========================================
+         1. iOSアプリ化・スプラッシュスクリーン設定
+         ========================================== -->
+    <!-- ホーム画面アイコン -->
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- フルスクリーンモード起動（SafariのUIを消す） -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- 上部の時計や電池マークの背景色を黒透明にする -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- スプラッシュ画像（アイコンと同じものをとりあえず指定。縦長の専用画像をアップすればさらに綺麗になります） -->
+    <link rel="apple-touch-startup-image" href="icon.png">
+
+    <!-- ==========================================
+         2. OGP（チャットでの綺麗なリンクプレビュー）設定
+         ========================================== -->
+    <meta property="og:title" content="SYK Portal">
+    <meta property="og:description" content="ANA SYK Portal - 社内システムリンク集">
+    <meta property="og:image" content="https://e0702357-shokato.github.io/icon.png">
+    <meta property="og:url" content="https://e0702357-shokato.github.io/">
+    <meta property="og:type" content="website">
+
+    <!-- ==========================================
+         3. ローディング画面のデザイン（CSS）
+         ========================================== -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8fafc; /* 清潔感のある薄いグレー背景 */
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+        }
+
+        /* ANAブルーをイメージした回転アニメーション */
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #cbd5e1;
+            border-top: 4px solid #005eb8; /* ANAブルー */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 24px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ふんわり点滅するテキスト */
+        .loading-text {
+            color: #334155;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+    </style>
 </head>
 <body>
-    <p>ポータルサイトへ移動中...</p>
+    <!-- 画面に表示されるローディング部品 -->
+    <div class="loader"></div>
+    <div class="loading-text">SYK Portalへ接続中...</div>
+
+    <!-- ==========================================
+         転送（リダイレクト）処理
+         ========================================== -->
+    <script>
+        // アニメーションを0.8秒（800ミリ秒）見せてからGASへ転送する
+        setTimeout(function() {
+            // ※ location.replaceを使うことで、ブラウザの「戻る」ボタンで転送画面に閉じ込められるのを防ぎます
+            window.location.replace("https://script.google.com/a/macros/ngoap.ana-g.com/s/AKfycbwbllubqjxgt5Any8DQnQa9yp7Iv85KnCQb0P-7_-fOOxQrnSQVKf4R5t_MaoA6qGv3aA/exec");
+        }, 800);
+    </script>
 </body>
 </html>
